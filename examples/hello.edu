@@ -1,0 +1,5 @@
+START
+    LET name = "Teddy"
+    PRINT "Hello"
+    PRINT name
+END
