@@ -37,6 +37,8 @@ class TokenType(Enum):
     MULTIPLY = auto()
     DIVIDE = auto()
     MODULO = auto()
+    LEFT_PAREN = auto()
+    RIGHT_PAREN = auto()
 
     # Comparison operators
     EQUAL = auto()

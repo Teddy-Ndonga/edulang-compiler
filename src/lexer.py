@@ -176,6 +176,8 @@ class Lexer:
                 "=": TokenType.ASSIGN,
                 ">": TokenType.GREATER,
                 "<": TokenType.LESS,
+                "(": TokenType.LEFT_PAREN,
+                ")": TokenType.RIGHT_PAREN,
             }
 
             if char in single_char_operators:
