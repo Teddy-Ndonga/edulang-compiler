@@ -1,5 +1,6 @@
 
 import argparse
+import subprocess
 import sys
 from pathlib import Path
 
@@ -24,12 +25,21 @@ def main(argv=None):
         help="Path for the generated Python file"
     )
 
+    parser.add_argument(
+        "--run",
+        action="store_true",
+        help="Execute the generated Python program after compilation"
+    )
+
     args = parser.parse_args(argv)
 
     source_path = Path(args.source)
 
     if source_path.suffix.lower() != ".edu":
-        print("Error: Source file must have a .edu extension.", file=sys.stderr)
+        print(
+            "Error: Source file must have a .edu extension.",
+            file=sys.stderr
+        )
         return 1
 
     output_path = (
@@ -49,6 +59,24 @@ def main(argv=None):
 
         print(f"Compilation successful: {source_path}")
         print(f"Generated Python file: {output_path}")
+
+        if args.run:
+            print("\nExecuting program...\n")
+
+            result = subprocess.run(
+                [sys.executable, str(output_path)],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+
+            if result.stdout:
+                print(result.stdout, end="")
+
+            if result.stderr:
+                print(result.stderr, file=sys.stderr, end="")
+
+            return result.returncode
 
         return 0
 

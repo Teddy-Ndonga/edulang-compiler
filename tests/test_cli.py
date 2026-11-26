@@ -85,3 +85,41 @@ def test_cli_handles_semantic_error(tmp_path, capsys):
 
     assert result == 1
     assert "Compilation failed" in capsys.readouterr().err
+
+
+def test_cli_executes_generated_program(tmp_path, capsys):
+    source_file = tmp_path / "hello.edu"
+
+    source_file.write_text(
+        'START\n'
+        '    PRINT "Hello from EduLang!"\n'
+        'END\n',
+        encoding="utf-8"
+    )
+
+    result = main([str(source_file), "--run"])
+
+    assert result == 0
+
+    captured = capsys.readouterr()
+    assert "Hello from EduLang!" in captured.out
+    assert "Executing program..." in captured.out
+
+
+def test_cli_returns_error_for_runtime_failure(tmp_path, capsys):
+    source_file = tmp_path / "runtime_error.edu"
+
+    source_file.write_text(
+        "START\n"
+        "    LET result = 10 / 0\n"
+        "    PRINT result\n"
+        "END\n",
+        encoding="utf-8"
+    )
+
+    result = main([str(source_file), "--run"])
+
+    assert result != 0
+
+    captured = capsys.readouterr()
+    assert "ZeroDivisionError" in captured.err
