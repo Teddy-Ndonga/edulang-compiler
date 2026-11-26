@@ -1,0 +1,46 @@
+
+START
+    # Simple Calculator
+
+    LET first_number = 0
+    LET second_number = 0
+    LET operation = ""
+    LET result = 0.0
+
+    PRINT "===== SIMPLE CALCULATOR ====="
+
+    # Get numbers from the user
+    INPUT first_number, "Enter the first number: "
+    INPUT second_number, "Enter the second number: "
+
+    # Select operation
+    INPUT operation, "Choose operation (+, -, *, /): "
+
+    # Perform calculation
+    IF operation == "+" THEN
+        SET result = first_number + second_number
+    ELSE
+        IF operation == "-" THEN
+            SET result = first_number - second_number
+        ELSE
+            IF operation == "*" THEN
+                SET result = first_number * second_number
+            ELSE
+                IF operation == "/" THEN
+                    IF second_number != 0 THEN
+                        SET result = first_number / second_number
+                    ELSE
+                        PRINT "Error: Cannot divide by zero."
+                    END IF
+                ELSE
+                    PRINT "Invalid operation."
+                END IF
+            END IF
+        END IF
+    END IF
+
+    # Display result
+    PRINT "===== CALCULATION RESULT ====="
+    PRINT result
+
+END

@@ -171,7 +171,17 @@ class Parser:
             "Expected variable name after INPUT"
         )
 
-        return InputStatement(name.value)
+        prompt = None
+
+        if self.match(TokenType.COMMA):
+            prompt_token = self.consume(
+                TokenType.STRING,
+                "Expected a string prompt after comma"
+            )
+
+            prompt = prompt_token.value
+
+        return InputStatement(name.value, prompt)
 
     def parse_if(self):
         condition = self.parse_expression()

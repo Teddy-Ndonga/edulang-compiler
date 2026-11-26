@@ -1,0 +1,59 @@
+
+START
+    # Declare variables
+    LET student_name = ""
+
+    LET mathematics = 0
+    LET english = 0
+    LET science = 0
+
+    LET total = 0
+    LET average = 0.0
+    LET grade = ""
+
+    # Get student information
+    PRINT "===== STUDENT GRADE CALCULATOR ====="
+
+    INPUT student_name, "Enter student name: "
+    INPUT mathematics, "Enter Mathematics marks: "
+    INPUT english, "Enter English marks: "
+    INPUT science, "Enter Science marks: "
+
+    # Calculate total and average
+    SET total = mathematics + english + science
+    SET average = total / 3
+
+    # Determine grade
+    IF average >= 80 THEN
+        SET grade = "A"
+    ELSE
+        IF average >= 70 THEN
+            SET grade = "B"
+        ELSE
+            IF average >= 60 THEN
+                SET grade = "C"
+            ELSE
+                IF average >= 50 THEN
+                    SET grade = "D"
+                ELSE
+                    SET grade = "E"
+                END IF
+            END IF
+        END IF
+    END IF
+
+    # Display results
+    PRINT "===== STUDENT RESULTS ====="
+
+    PRINT "Student:"
+    PRINT student_name
+
+    PRINT "Total marks:"
+    PRINT total
+
+    PRINT "Average:"
+    PRINT average
+
+    PRINT "Grade:"
+    PRINT grade
+END

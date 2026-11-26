@@ -36,6 +36,7 @@ class PrintStatement(ASTNode):
 @dataclass
 class InputStatement(ASTNode):
     name: str
+    prompt: str | None = None
 
 
 @dataclass

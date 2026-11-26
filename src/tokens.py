@@ -55,6 +55,8 @@ class TokenType(Enum):
     NEWLINE = auto()
     EOF = auto()
 
+    COMMA = auto()
+
 
 @dataclass
 class Token:

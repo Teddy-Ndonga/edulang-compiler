@@ -60,7 +60,13 @@ class CodeGenerator:
             return [f"{prefix}print({expression})"]
 
         if isinstance(statement, InputStatement):
-            return [self.generate_input(statement.name, prefix)]
+            return [
+                self.generate_input(
+                    statement.name,
+                    prefix,
+                    statement.prompt
+                )
+            ]
 
         if isinstance(statement, IfStatement):
             return self.generate_if(statement, indent)
@@ -72,17 +78,25 @@ class CodeGenerator:
             f"Unsupported statement: {type(statement).__name__}"
         )
 
-    def generate_input(self, name, prefix):
+    def generate_input(self, name, prefix, prompt=None):
         variable_type = self.symbols.get(name)
 
+        prompt_argument = repr(prompt) if prompt is not None else ""
+
         if variable_type is int:
-            conversion = "int(input())"
+            conversion = f"int(input({prompt_argument}))"
+
         elif variable_type is float:
-            conversion = "float(input())"
+            conversion = f"float(input({prompt_argument}))"
+
         elif variable_type is bool:
-            conversion = 'input().strip().lower() == "true"'
+            conversion = (
+                f'input({prompt_argument}).strip().lower() == "true"'
+            )
+
         elif variable_type is str:
-            conversion = "input()"
+            conversion = f"input({prompt_argument})"
+
         else:
             raise CodeGenerationError(
                 f"Unknown type for input variable '{name}'"

@@ -63,24 +63,35 @@ def main(argv=None):
         if args.run:
             print("\nExecuting program...\n")
 
-            result = subprocess.run(
-                [sys.executable, str(output_path)],
-                capture_output=True,
-                text=True,
-                check=False
-            )
+            if sys.stdin.isatty():
+                result = subprocess.run(
+                    [sys.executable, str(output_path)],
+                    check=False
+                )
+            else:
+                result = subprocess.run(
+                    [sys.executable, str(output_path)],
+                    capture_output=True,
+                    text=True,
+                    check=False
+                )
 
-            if result.stdout:
-                print(result.stdout, end="")
+                if result.stdout:
+                    print(result.stdout, end="")
 
-            if result.stderr:
-                print(result.stderr, file=sys.stderr, end="")
+                if result.stderr:
+                    print(result.stderr, file=sys.stderr, end="")
 
             return result.returncode
 
         return 0
 
-    except (OSError, SyntaxError, SemanticError, CodeGenerationError) as error:
+    except (
+        OSError,
+        SyntaxError,
+        SemanticError,
+        CodeGenerationError
+    ) as error:
         print(f"Compilation failed: {error}", file=sys.stderr)
         return 1
 

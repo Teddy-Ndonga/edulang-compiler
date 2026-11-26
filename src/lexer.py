@@ -178,6 +178,7 @@ class Lexer:
                 "<": TokenType.LESS,
                 "(": TokenType.LEFT_PAREN,
                 ")": TokenType.RIGHT_PAREN,
+                ",": TokenType.COMMA,
             }
 
             if char in single_char_operators:
